@@ -56,6 +56,7 @@ export default function CustomizedBoard(props) {
 
   return (
     <Chessboard
+     
       id="standard"
       position= {createPositionObject(currentPosition.toLowerCase(),pickupPos,deliveryPos)}
       draggable={true}

@@ -27,7 +27,6 @@ O Front End consome a API do backend para obter a rota de entrega mais rápida c
 Para solicitar a rota, o Front End envia uma requisição POST para /calculate-route com as posições desejadas.
 
 ```javascript
-Copy code
 axios.post('http://BACKEND_URL/calculate-route', {
   positions: [startPosition, pickupPoint, deliveryPoint]
 })
@@ -42,7 +41,6 @@ axios.post('http://BACKEND_URL/calculate-route', {
 Antes de enviar a requisição, as posições de entrada são validadas para garantir que estejam no formato correto (letra seguida de número, ex: A1, C3).
 
 ```javascript
-Copy code
 function validatePosition(position) {
   const regex = /^[A-H][1-8]$/i;
   return regex.test(position);
@@ -51,7 +49,7 @@ function validatePosition(position) {
 #### Como Rodar o Projeto
 Instruções sobre como instalar e rodar o projeto localmente.
 ```bash
-Copy code
+
 git clone URL_DO_REPOSITORIO_FRONTEND
 cd drone-delivery-frontend
 npm install

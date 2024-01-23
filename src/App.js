@@ -60,7 +60,7 @@ function App() {
       <h1>Drone Delivery Route calculate</h1>
       <div className='container'>
         <div className='chessboard'>
-        <CustomBoardDrone routePath={routePath} startPos={startPosition} deliveryPos={deliveryPoint} pickupPos={pickupPoint} 
+        <CustomBoardDrone  data-testid="chessboard" routePath={routePath} startPos={startPosition} deliveryPos={deliveryPoint} pickupPos={pickupPoint}  
          />
         </div>
         <div className='controls'>
