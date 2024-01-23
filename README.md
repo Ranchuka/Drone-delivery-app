@@ -50,7 +50,7 @@ function validatePosition(position) {
 Instruções sobre como instalar e rodar o projeto localmente.
 ```bash
 
-git clone URL_DO_REPOSITORIO_FRONTEND
+git clone https://github.com/Ranchuka/Drone-delivery-app.git
 cd drone-delivery-frontend
 npm install
 npm start
