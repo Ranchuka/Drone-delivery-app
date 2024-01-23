@@ -23,7 +23,7 @@ function App() {
   };
 
   const calculateRoute= ()=>{
-
+    setRoutePath('');
     if(!validatePosition(startPosition) || !validatePosition(pickupPoint) || !validatePosition(deliveryPoint) ) {
       alert("Please, insert a valid position (ex: A1, B3, H8).");
       return;
@@ -60,7 +60,7 @@ function App() {
       <h1>Drone Delivery Route calculate</h1>
       <div className='container'>
         <div className='chessboard'>
-        <CustomBoardDrone  data-testid="chessboard" routePath={routePath} startPos={startPosition} deliveryPos={deliveryPoint} pickupPos={pickupPoint}  
+        <CustomBoardDrone  data-testid="chessboard" routePath={routePath} startPos={startPosition} deliveryPos={deliveryPoint} pickupPos={pickupPoint}
          />
         </div>
         <div className='controls'>
@@ -68,31 +68,27 @@ function App() {
             type="text" 
             placeholder="Start Position (e.g., A1)"
             value={startPosition}
-          onChange={(e) => setStartPosition(e.target.value)}
+          onChange={(e) => setStartPosition(e.target.value.toLowerCase())}
           />
           <input 
           type="text" 
           placeholder="Pickup Point (e.g., C3)"
           value={pickupPoint}
-          onChange={(e) => setPickupPoint(e.target.value)}
+          onChange={(e) => setPickupPoint(e.target.value.toLowerCase())}
           />
           <input 
           type="text" 
           placeholder="Delivery Point (e.g., F6)"
-          onChange={(e) => setDeliveryPoint(e.target.value)}
+          onChange={(e) => setDeliveryPoint(e.target.value.toLowerCase())}
           />
           <button onClick={calculateRoute}>Calculate route</button>
-
+          <div>
+             <h3>Last 10 routes calculated</h3>
+          </div>
           <TableLastRoutes routes={calculatedRoutes}/>
         </div>
       </div>
     </div>
-
-
-
-
-
-   
   );
 }
 
@@ -109,10 +105,11 @@ function validatePosition(position)
 
 function TableLastRoutes({ routes }) {
   return (
+    
     <table>
       <thead>
         <tr>
-          <th>Seq</th>
+          
           <th>Route</th>
           <th>Time sec</th>
         </tr>

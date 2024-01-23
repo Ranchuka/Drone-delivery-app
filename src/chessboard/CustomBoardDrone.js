@@ -3,10 +3,11 @@ import Chessboard from "chessboardjsx";
 import drone from "../img/drone.png";
 import packageImg from "../img/package.png";
 import destination from "../img/destination.png";
-import { Chess } from "chess.js";
+
+
 let pickuped ='';
 
-const game = new Chess();
+
 export default function CustomizedBoard(props) {
   const [currentPosition, setCurrentPosition] = useState('');
   const [path, setPath] = useState([]);
@@ -37,13 +38,6 @@ export default function CustomizedBoard(props) {
 
   // Efeito para percorrer o caminho
   useEffect(() => {
-
-    if(currentPosition === deliveryPos ){
-      setDeliveryPos('');
-      setStartPos('');
-      setPickupPos('');
-      setDelivered(true);
-    }
     if (path.length > 0 && pathIndex < path.length) {
       const timer = setTimeout(() => {
         setCurrentPosition(path[pathIndex]);
@@ -52,7 +46,23 @@ export default function CustomizedBoard(props) {
       return () => clearTimeout(timer); // Limpa o timer
     }
 
-  }, [path, pathIndex,currentPosition]);
+  }, [path, pathIndex]);
+
+
+  useEffect(()=>{
+
+    if(path.length === pathIndex ){
+      const timer = setTimeout(() => {
+        setDeliveryPos('');
+        setStartPos('');
+        setPickupPos('');
+        setDelivered(true);
+      }, 1000); 
+      return () => clearTimeout(timer); 
+    }
+
+  },[path,pathIndex]);
+
 
   return (
     <Chessboard
