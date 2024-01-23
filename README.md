@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# Drone Delivery Front End
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este é o Front End do projeto Drone Delivery, uma aplicação web desenvolvida em React que simula a entrega de pacotes por drones utilizando um tabuleiro de xadrez. Este projeto utiliza a biblioteca `chessboardjsx` para renderizar o tabuleiro e consome uma API de backend para calcular rotas de entrega.
 
-## Available Scripts
+## Características
 
-In the project directory, you can run:
+- Interface interativa para visualizar a rota de entrega do drone.
+- Consumo da API de backend para calcular a rota mais rápida.
 
-### `npm start`
+## Utilização da Biblioteca chessboardjsx
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+`chessboardjsx` é uma biblioteca React para renderizar tabuleiros de xadrez. No contexto do nosso projeto, ela é usada para visualizar o tabuleiro de xadrez e a rota de entrega do drone.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Exemplo Básico
 
-### `npm test`
+```jsx
+import Chessboard from "chessboardjsx";
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+function MyChessboard() {
+  return <Chessboard position="start" />;
+}
+```
+#### Consumo da API do Backend
+O Front End consome a API do backend para obter a rota de entrega mais rápida com base nas posições de partida, coleta e entrega.
 
-### `npm run build`
+##### Requisição da Rota
+Para solicitar a rota, o Front End envia uma requisição POST para /calculate-route com as posições desejadas.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```javascript
+Copy code
+axios.post('http://BACKEND_URL/calculate-route', {
+  positions: [startPosition, pickupPoint, deliveryPoint]
+})
+.then(response => {
+  // Manipulação da resposta
+})
+.catch(error => {
+  // Tratamento de erro
+});
+```
+#### Validação dos Dados
+Antes de enviar a requisição, as posições de entrada são validadas para garantir que estejam no formato correto (letra seguida de número, ex: A1, C3).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```javascript
+Copy code
+function validatePosition(position) {
+  const regex = /^[A-H][1-8]$/i;
+  return regex.test(position);
+}
+```
+#### Como Rodar o Projeto
+Instruções sobre como instalar e rodar o projeto localmente.
+```bash
+Copy code
+git clone URL_DO_REPOSITORIO_FRONTEND
+cd drone-delivery-frontend
+npm install
+npm start
+```
