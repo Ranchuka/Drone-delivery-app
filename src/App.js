@@ -1,7 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import React, { useState, useEffect} from 'react';
-import Chessboard from 'chessboardjsx';
+import React, { useState} from 'react';
 import CustomBoardDrone from './chessboard/CustomBoardDrone.js';
 import axios from 'axios';
 
@@ -18,17 +16,16 @@ function App() {
     setStartPosition('');
     setPickupPoint('');
     setDeliveryPoint('');
-    setRoutePath('');
-    
   };
 
+ 
   const calculateRoute= ()=>{
     setRoutePath('');
     if(!validatePosition(startPosition) || !validatePosition(pickupPoint) || !validatePosition(deliveryPoint) ) {
       alert("Please, insert a valid position (ex: A1, B3, H8).");
       return;
     }
-    if( startPosition.length !=2 || pickupPoint.length !=2 || deliveryPoint.length !=2) {
+    if( startPosition.length !==2 || pickupPoint.length !==2 || deliveryPoint.length !==2) {
       alert("Please, insert a valid position ( (ex: A1, B3, H8).");
       return;
     }
@@ -36,17 +33,19 @@ function App() {
         positions:[startPosition.toUpperCase(), pickupPoint.toUpperCase(), deliveryPoint.toUpperCase()]
       })
       .then(response =>{
-
-       
-        setRoutePath(response.data.route);
+        setRoutePath(response.data);
         addCalculatedRoute({
+          request:`Start: ${startPosition}, Pickup:${pickupPoint}, Delivery: ${deliveryPoint}`,
           route: response.data.route,
           time: response.data.timer,
         });
-        
       })
       .catch(error =>{
         console.error('error to make requisition', error);
+      }).finally(()=>{
+
+          resetData();
+
       });
   }
  
@@ -60,7 +59,7 @@ function App() {
       <h1>Drone Delivery Route calculate</h1>
       <div className='container'>
         <div className='chessboard'>
-        <CustomBoardDrone  data-testid="chessboard" routePath={routePath} startPos={startPosition} deliveryPos={deliveryPoint} pickupPos={pickupPoint}
+        <CustomBoardDrone  data-testid="chessboard" routePath={routePath} //startPos={startPosition} deliveryPos={deliveryPoint} pickupPos={pickupPoint}
          />
         </div>
         <div className='controls'>
@@ -79,6 +78,7 @@ function App() {
           <input 
           type="text" 
           placeholder="Delivery Point (e.g., F6)"
+          value={deliveryPoint}
           onChange={(e) => setDeliveryPoint(e.target.value.toLowerCase())}
           />
           <button onClick={calculateRoute}>Calculate route</button>
@@ -109,7 +109,8 @@ function TableLastRoutes({ routes }) {
     <table>
       <thead>
         <tr>
-          
+          <th>Sequence</th>
+          <th>Request</th>
           <th>Route</th>
           <th>Time sec</th>
         </tr>
@@ -118,6 +119,7 @@ function TableLastRoutes({ routes }) {
         {routes.map((route, index) => (
           <tr key={index}>
             <td>{index}</td>
+            <td>{route.request}</td>
             <td className='route-cell'>{route.route}</td>
             <td>{route.time}</td>
           </tr>
