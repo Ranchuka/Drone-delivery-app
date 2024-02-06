@@ -4,11 +4,8 @@ import drone from "../img/drone.png";
 import packageImg from "../img/package.png";
 import destination from "../img/destination.png";
 
-
-
 export default function CustomizedBoard(props) {
   const [currentPosition, setCurrentPosition] = useState('');
-  const [nextPosition, setNextposition] = useState('');
   const [path, setPath] = useState([]);
   const [pathIndex, setPathIndex] = useState(0);
   const [pickupPos, setPickupPos ] = useState('');
@@ -21,7 +18,6 @@ export default function CustomizedBoard(props) {
       const routeArray = props.routePath.route.split(',');
       setPath(routeArray);
       setCurrentPosition(routeArray[0]);
-      setNextposition(routeArray[1]);
       setPathIndex(0);
       setPickuped(false);
       setDelivered(false);
@@ -56,7 +52,6 @@ export default function CustomizedBoard(props) {
      
       id="standard"
       position= {createPositionObject(currentPosition.toLowerCase(),pickupPos.toLocaleLowerCase(),deliveryPos.toLocaleLowerCase())}
-      // onDrop={createPositionOnDrop(currentPosition.toLowerCase(),nextPosition.toLowerCase())}
       draggable={true}
       transitionDuration={100}
       dropOffBoard="trash"
@@ -121,20 +116,7 @@ export default function CustomizedBoard(props) {
    
     return objeto;
   }
-  // function createPositionOnDrop(dronePos,nextPosition){
 
-  //   let objeto= {};
-  
-   
-  //     objeto = {
-  //       sourceSquare: dronePos,
-  //       targetSquare: nextPosition,
-  //       piece: 'wK',
-  //     };
-    
-   
-  //   return objeto;
-  // }
 }
 
 
